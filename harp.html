@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta name="viewport" content="width=device-width,user-scalable=1,initial-scale=1.0,minimum-scale=1.0">
+
+        <meta charset="utf-8">
+	<meta name="description" content="Virtual piano for music teachers and students. Visualize notes, intervals, chords, scales, and play the piano using your computer keyboard.">
+	<title>Virtual Harp Piano</title>
+  <script src="./js/jquery.min.js?3.6.0"></script>
+
+
+<!--	commented only for local server-->
+
+        <link rel="stylesheet" href="./css/screen.css">
+        <link rel="icon" type="image/png" href="./images/favicon.png">
+
+    </head>
+
+    <body class=" en-GB">
+
+    
+ 
+	<div class="fix__content">
+		<div class="wrapper">
+		
+			
+				
+				<div class="content">
+					<div class="container">
+						<div class="">
+
+							
+							<div  class="">
+
+								
+								
+<article class="default__content item-page " itemscope itemtype="https://schema.org/Article">
+
+	<meta itemprop="inLanguage" content="en-GB">
+
+
+	<!-- article content -->
+	<div itemprop="articleBody">
+		<div class="default__page__content">
+			<link rel="stylesheet" href="./css/style.css">
+
+<div id="piano">
+<section class="buttons-wrapper">
+   <div class="buttons-container">
+     <button class="mark"></button>
+     <button class="hideNotes"></button>
+     <button class="playAll hidden"></button>
+     <button class="clear btn-reset hidden"></button>
+     <button class="hideSettings"></button>
+   </div>
+</section>
+  <div class="piano">
+    <div class="piano--black-keys">
+      <ul>
+        <li class="key key-left key--left">
+          <span class="black-key" data-key="0" data-note="3cis"></span>
+        </li>
+        <li class="key key-right key--right">
+          <span class="black-key" data-key="87" data-note="3dis"></span>
+        </li>
+        <li></li>
+        <li class="key key-left">
+          <span class="black-key" data-key="" data-note="3fis"></span>
+        </li>
+        <li class="key">
+          <span class="black-key" data-key="82" data-note="3gis"></span>
+        </li>
+        <li class="key key-right">
+          <span class="black-key" data-key="84" data-note="3ais"></span>
+        </li>
+        <li></li>
+        <li class="key key-left key--left">
+          <span class="black-key" data-key="" data-note="4cis"></span>
+        </li>
+        <li class="key key-right key--right">
+          <span class="black-key" data-key="50" data-note="4dis"></span>
+        </li>
+        <li></li>
+        <li class="key key-left">
+          <span class="black-key" data-key="" data-note="4fis"></span>
+        </li>
+        <li class="key">
+          <span class="black-key" data-key="52" data-note="4gis"></span>
+        </li>
+        <li class="key key-right">
+          <span class="black-key" data-key="53" data-note="4ais"></span>
+        </li>
+        <li></li>
+        <li class="key key-left key--left">
+          <span class="black-key" data-key="" data-note="5cis"></span>
+        </li>
+        <li class="key key-right key--right">
+          <span class="black-key" data-key="55" data-note="5dis"></span>
+        </li>
+        <li></li>
+        <li class="key key-left">
+          <span class="black-key" data-key="" data-note="5fis"></span>
+        </li>
+        <li class="key">
+          <span class="black-key" data-key="57" data-note="5gis"></span>
+        </li>
+        <li class="key key-right">
+          <span class="black-key" data-key="48" data-note="5ais"></span>
+        </li>
+
+        <li></li>
+        <li class="key key-left key--left">
+          <span class="black-key" data-key="" data-note="6cis"></span>
+        </li>
+        <li class="key key-right key--right">
+          <span class="black-key" data-key="" data-note="6dis"></span>
+        </li>
+        <li></li>
+        <li class="key key-left">
+          <span class="black-key" data-key="" data-note="6fis"></span>
+        </li>
+        <li class="key">
+          <span class="black-key" data-key="" data-note="6gis"></span>
+        </li>
+        <li class="key key-right">
+          <span class="black-key" data-key="" data-note="6ais"></span>
+        </li>
+      </ul>
+    </div>
+    <ul class="piano--white-keys">
+      <li class="key">
+        <span class="white-key" data-key="81" data-note="3c"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="3d"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="3e"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="69" data-note="3f"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="3g"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="3a"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="3b"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="49" data-note="4c"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="4d"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="4e"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="51" data-note="4f"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="4g"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="4a"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="4b"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="54" data-note="5c"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="5d"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="5e"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="56" data-note="5f"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="5g"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="5a"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="5b"></span>
+      </li>
+      
+      <li class="key">
+        <span class="white-key" data-key="61" data-note="6c"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="6d"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="6e"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="6f"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="6g"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="6a"></span>
+      </li>
+      <li class="key">
+        <span class="white-key" data-key="" data-note="6b"></span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script src="./js/English.js"></script>
+<script src="./js/harp_scripts.js"></script>
+<noscript>
+  You need to enable JavaScript to use the piano.
+</noscript>
+<br><br>
+<div class="tools__page__content">
+  <div id="keyTablesWrapper">
+    <table id="keyTableCisWrapper"></table>
+    <table id="keyTableWrapper"></table>
+    <div style='clear:both'></div>
+  </div>
+<h2>Play piano online</h2>
+<p>Use your computer keyboard or click the piano keys to play the piano. The keyboard's top row of letters corresponds to the white keys, and the row of numbers corresponds to the black keys. You can play multiple notes simultaneously.</p>
+  
+<p>Click "Hide note names" above the piano to hide the note names. Click "Mark" to mark notes on the piano. Play the marked notes by clicking the "Play" button (only visible after notes have been marked) or pressing the spacebar on your keyboard.</p>
+
+<p>Save your markings on the piano by copying the web address in your browser. This&nbsp;also&nbsp;allows you to share your markings with others. For example, here is a <a href="/piano?1f.1gis.2c.2dis"><span style="white-space:nowrap">F minor</span> seventh chord</a> and an <a href="/piano?1e.1fis.1gis.2a.2b.2cis.2dis.2e"><span style="white-space:nowrap">E major</span> scale</a>.</p>
+  
+</div>		</div>
+	</div>
+	<!-- / article content -->
+
+						
+							
+</article>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			
+		</div>	
+        
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

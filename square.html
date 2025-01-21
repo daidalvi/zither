@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=1,initial-scale=1.0,minimum-scale=1.0">
+    <meta charset="utf-8">
+    <title>Virtual Harp Piano</title>
+    <script src="./js/jquery.min.js?3.6.0"></script>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #square {
+            background: black;
+            display: grid;
+            height: 100vh;
+            grid-auto-rows: minmax(0, 1fr);
+            grid-auto-flow: row;
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+
+        .data-snote-row {
+            display: grid;
+            grid-auto-columns: minmax(0, 1fr);
+            grid-auto-flow: column;
+
+        }
+
+        .data-snote-wrapper {
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-snote {
+            flex: 1 1 auto;
+        }
+
+        select, #createPresetLink, #resetBgBorder, #changeBorder {
+            width: 100%;
+            height: 45px;
+            text-align: center;
+            font-size: 18px;
+        }
+        #createPresetLink, #resetBgBorder, #filetag, #changeBorder {
+            width:48%;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class=" en-GB">
+
+    <div id="square">
+        <div class="data-snote-row">
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="5c"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="5dis"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="5f"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="5gis"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="5ais"></div>
+            </div>
+        </div>
+        <div class="data-snote-row">
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="4c"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="4dis"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="4f"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="4gis"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="4ais"></div>
+            </div>
+        </div>
+        <div class="data-snote-row">
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="3c"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="3dis"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="3f"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="3gis"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="3ais"></div>
+            </div>
+        </div>
+        <div class="data-snote-row">
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote="6c"></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote=""></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div class="select-wrapper"></div>
+                <div class="data-snote" data-snote=""></div>
+            </div>
+            <div class="data-snote-wrapper">
+                <div id="select_picture" class="hidden">
+                    <select id="bgImages">
+                        <option value="">- Select BG -</option>
+                        <option value="wood1.jpg">Wood 1</option>
+                        <option value="wood2.jpg">Wood 2</option>
+                        <option value="wood3.jpg">Wood 3</option>
+                        <option value="wood4.jpg">Wood 4</option>
+                    </select>
+                    <input type="color" value="#333333" id="changeBorder">
+                    <input type="file" id="filetag"><br />
+                    <input type="button" value="💾" id="createPresetLink" />
+                    <input type="button" value="✘" id="resetBgBorder" />
+                </div>
+            </div>
+            <div class="data-snote-wrapper" id="show_hide_list">
+            </div>
+        </div>
+    </div>
+    <script src="./js/English.js"></script>
+    <script src="./js/harp_scripts.js"></script>
+
+
+    <script>
+
+        var BORDER_COLOR_INITIAL = "#333333";
+
+        var fileTag = document.getElementById("filetag"),
+            preview = document.getElementById("square");
+
+        fileTag.addEventListener("change", function () {
+            changeImage(this);
+        });
+
+        document.getElementById("changeBorder").addEventListener("change", function () {
+            const slides = document.getElementsByClassName("data-snote-wrapper");
+            for (let i = 0; i < slides.length; i++) {
+                slides.item(i).style.borderColor = this.value;
+            }
+        });
+        document.getElementById("resetBgBorder").addEventListener("click", function () {
+            const slides = document.getElementsByClassName("data-snote-wrapper");
+            for (let i = 0; i < slides.length; i++) {
+                slides.item(i).style.borderColor = BORDER_COLOR_INITIAL;
+            }
+            preview.style.backgroundImage = "";
+            document.getElementById("bgImages").value="";
+            document.getElementById("changeBorder").value="";
+        });
+
+        document.getElementById("bgImages").addEventListener("change", function () {
+            let dataURL = "./images/bg/"+this.value;
+            preview.style.backgroundImage = (this.value)? `url('${dataURL}')` : "";
+        });
+        
+
+        document.getElementById("createPresetLink").addEventListener("click", function () {
+
+            var raw_url = window.location.href.split('?')[0];
+            let url = new URL(raw_url);
+
+            const slides = document.getElementsByClassName("data-snote");
+            for (let i = 0; i < slides.length; i++) {
+                if(slides[i].hasAttribute("data-snote-initial") && slides[i].dataset.snote != slides[i].dataset.snoteInitial){
+                    url.searchParams.set('z'+i, slides[i].dataset.snote);
+                }
+            }
+            if(document.getElementById("changeBorder").value !=BORDER_COLOR_INITIAL){
+                url.searchParams.set("border", document.getElementById("changeBorder").value);
+            }
+            if(document.getElementById("bgImages").value){
+                url.searchParams.set("bg", document.getElementById("bgImages").value);
+            }
+
+            console.log(url.href);
+            copyToClipboard(url.href);
+        });
+        
+
+        $( document ).ready(function() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            if(urlParams.has('border')){
+                document.getElementById("changeBorder").value = urlParams.get('border');
+                var event = new Event('change');
+                document.getElementById("changeBorder").dispatchEvent(event);
+            }
+            if(urlParams.has('bg')){
+                document.getElementById("bgImages").value = urlParams.get('bg');
+                var event = new Event('change');
+                document.getElementById("bgImages").dispatchEvent(event);
+            }
+            var selects = document.getElementsByClassName("select_note");
+            for (let i = 0; i < selects.length; i++) {
+                if(urlParams.has('z'+i)){
+                    //slides[i].dataset.snoteInitial = slides[i].dataset.snote;
+                    //slides[i].dataset.snote = urlParams.get('z'+i);
+                    selects[i].value= urlParams.get('z'+i);
+                    selects[i].dispatchEvent(event);
+                }
+
+            }
+        });
+
+
+        function changeImage(input) {
+            var reader;
+
+            if (input.files && input.files[0]) {
+                reader = new FileReader();
+
+                reader.onload = function (e) {
+                    //preview.setAttribute('background-image', e.target.result);
+                    const dataURL = e.target.result;
+                    preview.style.backgroundImage = `url('${dataURL}')`;
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+        function copyToClipboard(text_to_copy) {
+
+            if (!navigator.clipboard) {
+                // use old commandExec() way
+                const elem = document.createElement('textarea');
+                elem.value = text_to_copy;
+                document.body.appendChild(elem);
+                elem.select();
+                document.execCommand('copy');
+                document.body.removeChild(elem);
+            } else {
+                navigator.clipboard.writeText(text_to_copy).then(
+                        function () {
+                            //alert("yeah!"); // success 
+                        })
+                    .catch(
+                        function () {
+                            //alert("err"); // error
+                        });
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>

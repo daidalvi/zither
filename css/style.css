@@ -1,0 +1,434 @@
+.piano {
+    position: relative
+}
+
+.hide-notes,
+.key .marked span,
+.hide-notes span {
+    visibility: hidden
+}
+
+.hidden {
+    display: none
+}
+
+.piano--white-keys {
+    text-align: center;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    height: 200px
+}
+
+.key .white-key {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: #fff;
+    border-top: 1px solid rgba(32, 32, 32, 0.2);
+    border-right: 1px solid rgba(32, 32, 32, 0.3);
+    border-bottom: 1px solid rgba(32, 32, 32, 0.3);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 5px 1px rgba(32, 32, 32, 0.2);
+    width: 100%;
+    height: 190px;
+    transition: background-color .05s ease, box-shadow .05s ease
+}
+
+.key .white-key.active {
+    background: #d8d8d8;
+    transform: translateY(4px);
+    box-shadow: 0 0 0 rgba(32, 32, 32, 0);
+    transition: background-color .05s ease, box-shadow .05s ease
+}
+
+.key * {
+    -webkit-user-select: none;
+    user-select: none;
+    font-family: 'Open Sans', sans-serif
+}
+
+.key {
+    width: 100%;
+    cursor: pointer;
+    z-index: 1
+}
+
+.key>span i {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: normal;
+    font-variant: normal;
+    margin-bottom: 12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%
+}
+
+.key .note {
+    margin-bottom: 11px
+}
+
+.key .marked i {
+    background-color: #72ac51;
+    box-shadow: inset -1px -3px 4px rgba(32, 32, 32, 0.3);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: transparent;
+    margin-top: -12px
+}
+
+.piano--black-keys {
+    height: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%
+}
+
+.key>span * {
+    pointer-events: none
+}
+
+.piano--black-keys ul {
+    display: flex;
+    width: 95%;
+    padding-bottom: 0
+}
+
+.piano--black-keys li {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 0;
+    box-sizing: border-box
+}
+
+.piano--black-keys .key {
+    z-index: 2
+}
+
+.piano--black-keys li>span {
+    height: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 80%;
+    background-color: #000;
+    background: linear-gradient(-20deg, #222, #000, #222);
+    box-shadow: 0 5px 1px rgba(32, 32, 32, 0.2);
+    transition: background-color .05s ease, box-shadow .05s ease;
+    border-radius: 0 0 5px 5px;
+    color: #fff
+}
+
+.piano--black-keys .key-left {
+    justify-content: flex-start
+}
+
+.piano--black-keys .key-right {
+    justify-content: flex-end
+}
+
+.piano--black-keys .key--left {
+    box-sizing: border-box;
+    padding-left: 2px;
+    margin-right: -2px
+}
+
+.piano--black-keys .key--right {
+    box-sizing: border-box;
+    padding-right: 2px;
+    margin-left: -2px
+}
+
+.piano--black-keys .note {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center
+}
+
+.piano--black-keys .note>span {
+    display: flex;
+    align-items: baseline;
+    height: 11px;
+    margin: 1px 0
+}
+
+.piano--black-keys .black-key.active {
+    background: linear-gradient(-20deg, #000, #000, #000);
+    box-shadow: 0 2px 2px rgba(32, 32, 32, 0.3);
+    transition: background-color .05s ease, box-shadow .05s ease;
+    transform: translateY(5px);
+    height: 109px
+}
+
+.key:first-child .white-key {
+    border-left: none;
+    border-radius: 0 0 5px 0
+}
+
+.key:last-child .white-key {
+    border-right: 0;
+    border-radius: 0 0 0 5px
+}
+
+.key:first-child .white-key.active,
+.key:last-child .white-key.active {
+    box-shadow: 0 0 0 rgba(32, 32, 32, 0)
+}
+
+.accidental {
+    font-family: "Musicca Unicode";
+    font-size: 92%;
+    padding-left: 1px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.hide--tablet {
+    display: none
+}
+
+.tools__page__content {
+    padding: 0 75px 50px 75px;
+    margin: auto
+}
+
+@media(min-width:1006px) {
+
+    .its_setting_page.default__content,
+    article.default__content {
+        padding: 0
+    }
+}
+
+@media(min-width:767px) {
+
+    .its_setting_page.default__content,
+    article.default__content {
+        padding: 15px 0
+    }
+}
+
+@media(min-width:1006px) {
+    .default__content {
+        padding: 15px 0
+    }
+
+    .default__page__title {
+        padding-left: 75px
+    }
+
+    .tools__page__content {
+        padding: 0 75px 30px 75px
+    }
+
+    .article-info,
+    .buttons-container {
+        padding-left: 75px
+    }
+}
+
+@media(max-width:1005px) {
+
+    .default__content,
+    .content__right .finder,
+    .contact__content {
+        max-width: 100%;
+        padding: 30px 0
+    }
+
+    .content__right {
+        padding: 0
+    }
+
+    .tools__page__content {
+        padding: 0 60px 30px 60px;
+        width: 750px;
+        margin: auto
+    }
+
+    .default__page__title {
+        max-width: 750px;
+        margin: 0 auto;
+        padding-left: 60px;
+        margin-top: 15px
+    }
+
+    .buttons-container {
+        padding-left: 60px;
+        padding-right: 60px;
+        max-width: 750px;
+        width: 750px;
+        margin: auto
+    }
+
+    .article-info {
+        max-width: 750px;
+        margin: auto;
+        padding: 0 60px
+    }
+}
+
+@media(max-width:767px) {
+    #piano {
+        overflow: auto;
+    }
+    .piano {
+        width: 100%;
+        min-width: 750px;
+        overflow-y: scroll
+    }
+
+    .piano::-webkit-scrollbar {
+        width: 0;
+        background: transparent;
+        display: none
+    }
+
+    .piano--white-keys {
+        width: 750px;
+        height: 185px
+    }
+
+    .piano--black-keys {
+        width: 750px;
+        max-width: 750px !important
+    }
+
+    .key span i {
+        margin-bottom: 10px;
+        width: 18px;
+        height: 18px
+    }
+
+    .key .black-key {
+        height: 100px
+    }
+
+    .key .black-key.active {
+        top: 5px;
+        height: 100px
+    }
+
+    .key .white-key {
+        height: 180px
+    }
+
+    .key .white-key.active {
+        top: 5px
+    }
+
+    .tools__page__content {
+        padding: 0 15px
+    }
+
+    .default__page__title {
+        padding-left: 15px;
+        margin-top: 10px
+    }
+
+    .default__content,
+    .content__right .finder,
+    .contact__content {
+        padding: 0
+    }
+
+    .buttons-container {
+        padding-left: 15px;
+        padding-right: 15px
+    }
+
+    .article-info {
+        padding: 0 15px
+    }
+}
+
+@media(max-width:480px) {
+    .key .white-key.active {
+        height: 180px;
+        top: 5px
+    }
+}
+
+.buttons-wrapper {
+    overflow: hidden
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-top: 14px;
+    padding-bottom: 22px
+}
+
+.buttons-container {
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none
+}
+
+.buttons-container::-webkit-scrollbar {
+    display: none
+}
+
+.buttons-container button {
+    font-family: Open Sans, sans-serif;
+    font-size: 14px;
+    height: 37px;
+    background: #f8f8f8;
+    padding: 8px 14px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    color: #000;
+    transition: .25s ease;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-right: 8px;
+    user-select: none
+}
+
+.buttons-container button:hover {
+    border-color: #dadada;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+}
+
+.buttons-container button:active {
+    background-color: #e4e4e4;
+    border-color: #dadada;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2)
+}
+
+.buttons-container button:focus {
+    outline: 0
+}
+
+.buttons-container button.active {
+    background-color: #e4e4e4;
+    border-color: #dadada
+}
+
+.buttons-container button.active:active {
+    background-color: #e0e0e0
+}
+
+#keyTableCisWrapper {
+    width: 48%;
+    float: left;
+}
+
+#keyTableWrapper {
+    width: 48%;
+    float: right;
+}
