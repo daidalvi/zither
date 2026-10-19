@@ -751,6 +751,52 @@ msgOutBgSelected {
     background-color: #febb5b; /* historyPeer8UserpicBg */
     color: #1a2026; /* groupCallBg */
 }
+
+
+
+
+html:not(.theme-light) .topic-navigation {
+    background-color: #323236;
+    border-bottom: 1px solid #3d3d42;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+html:not(.theme-light) .topic-tab {
+    color: #b0b0b4;
+}
+
+html:not(.theme-light) .topic-tab:hover {
+    background-color: #3d3d42;
+}
+
+html:not(.theme-light) .topic-tab.active {
+    background-color: #5a7db8;
+    color: #ffffff;
+}
+
+/* Подложка альбома — тёмная системная */
+html:not(.theme-light) .album {
+    background: #323236;
+}
+
+html:not(.theme-light) .album-item {
+    background: #3d3d42;
+}
+
+/* Переключатель темы — тёмный системный */
+html:not(.theme-light) .theme-switcher {
+    background: rgba(50, 50, 54, 0.95);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+html:not(.theme-light) .theme-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+html:not(.theme-light) .theme-btn.active {
+    background: rgba(138, 180, 248, 0.3);
+}
+
 }
 
 
@@ -1286,6 +1332,11 @@ html.theme-light .album {
 html.theme-light .album-item {
     background: #ddd !important;
 }
+
+
+
+
+
 
 /* ========================================= */
 /* == Улучшенная навигация по темам == */
