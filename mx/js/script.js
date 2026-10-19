@@ -239,24 +239,19 @@ document.addEventListener('DOMContentLoaded', function() {
 // == УДАЛЕНИЕ ВИДЕО "EXCEEDS MAXIMUM SIZE" ==
 // ===================================================================
 function removeOversizedVideos() {
-    // Находим все блоки media_video с текстом "Exceeds maximum size"
     const oversizedVideos = document.querySelectorAll('.media_video');
     oversizedVideos.forEach(block => {
         const description = block.querySelector('.description');
         if (description && description.textContent.includes('Exceeds maximum size')) {
-            // Удаляем весь блок сообщения, если это единственное содержимое
             const message = block.closest('.message');
             if (message) {
-                // Проверяем, есть ли в сообщении ещё что-то полезное
                 const text = message.querySelector('.text');
                 const hasText = text && text.textContent.trim().length > 0;
                 const hasOtherMedia = message.querySelector('.photo_wrap, .video_file_wrap:not(.media_video)');
 
                 if (!hasText && !hasOtherMedia) {
-                    // Если только это видео — удаляем сообщение целиком
                     message.remove();
                 } else {
-                    // Иначе удаляем только блок видео
                     block.remove();
                 }
             }
@@ -270,21 +265,18 @@ function removeOversizedVideos() {
 const THEME_KEY = 'telegram-export-theme';
 
 function initThemeSwitcher() {
-    // Создаём кнопку
     const switcher = document.createElement('div');
     switcher.className = 'theme-switcher';
     switcher.innerHTML = `
-        <button class="theme-btn" data-theme="light" title="Светлая тема">☀️</button>
-        <button class="theme-btn" data-theme="dark" title="Тёмная тема">🌙</button>
-        <button class="theme-btn" data-theme="system" title="Как в системе">💻</button>
+        <button type="button" class="theme-btn" data-theme="light" title="Светлая тема">☀️</button>
+        <button type="button" class="theme-btn" data-theme="dark" title="Тёмная тема">🌙</button>
+        <button type="button" class="theme-btn" data-theme="system" title="Как в системе">💻</button>
     `;
     document.body.appendChild(switcher);
 
-    // Применяем сохранённую тему
     const savedTheme = localStorage.getItem(THEME_KEY) || 'system';
     applyTheme(savedTheme);
 
-    // Обработчики
     switcher.querySelectorAll('.theme-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const theme = btn.dataset.theme;
@@ -293,7 +285,6 @@ function initThemeSwitcher() {
         });
     });
 
-    // Следим за системной темой
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
             const current = localStorage.getItem(THEME_KEY) || 'system';
@@ -306,18 +297,14 @@ function initThemeSwitcher() {
 
 function applyTheme(theme) {
     const root = document.documentElement;
-    // Удаляем все классы тем
     root.classList.remove('theme-light', 'theme-dark');
 
     if (theme === 'light') {
         root.classList.add('theme-light');
     } else if (theme === 'dark') {
         root.classList.add('theme-dark');
-    } else {
-        // system — ничего не добавляем, полагаемся на CSS media query
     }
 
-    // Обновляем активную кнопку
     document.querySelectorAll('.theme-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.theme === theme);
     });
@@ -353,6 +340,7 @@ function initTopicTabs() {
     nav.appendChild(navContent);
 
     const allTab = document.createElement('button');
+    allTab.type = 'button';
     allTab.className = 'topic-tab active';
     allTab.textContent = 'Все';
     allTab.dataset.topicId = 'all';
@@ -360,6 +348,7 @@ function initTopicTabs() {
 
     Object.keys(topics).forEach(topicId => {
         const tab = document.createElement('button');
+        tab.type = 'button';
         tab.className = 'topic-tab';
         tab.textContent = topics[topicId];
         tab.dataset.topicId = topicId;
@@ -406,7 +395,6 @@ function initTopicTabs() {
 }
 
 function getTopicIdForMessage(messageElement) {
-    // Проверяем сам элемент
     let replyTo = messageElement.querySelector('.reply_to.details a[href^="#go_to_message"]');
     if (replyTo) {
         const topicMessageId = replyTo.getAttribute('href').replace('#go_to_message', '');
@@ -414,7 +402,6 @@ function getTopicIdForMessage(messageElement) {
             return topicMessageId;
         }
     }
-    // Если это альбом — проверяем сохранённый data-topic
     if (messageElement.dataset && messageElement.dataset.topicId) {
         return messageElement.dataset.topicId;
     }
@@ -484,21 +471,38 @@ function groupAlbums() {
                 const albumContainer = document.createElement('div');
                 albumContainer.className = 'album';
                 albumContainer.dataset.count = albumItems.length;
+                if (topicId) {
+                    albumContainer.dataset.topicId = topicId;
+                }
 
-                // Собираем все медиа-ссылки ДО очистки firstMsg
+                // Собираем все медиа-ссылки и все тексты ДО очистки firstMsg
                 const mediaLinks = albumItems.map(item => item.querySelector('.photo_wrap, .video_file_wrap'));
+                const texts = albumItems.map(item => {
+                    const textEl = item.querySelector('.text');
+                    return textEl ? textEl.innerHTML : null;
+                }).filter(t => t !== null);
 
                 const firstMsg = albumItems[0];
                 const body = firstMsg.querySelector('.body');
 
-                // Удаляем media_wrap и text из firstMsg (после сбора ссылок)
+                // Удаляем media_wrap из firstMsg (после сбора ссылок)
                 const mediaWrapToRemove = body.querySelector('.media_wrap');
                 if (mediaWrapToRemove) mediaWrapToRemove.remove();
+
+                // Удаляем старый text из firstMsg (мы его сохранили в texts)
                 const textToRemove = body.querySelector('.text');
                 if (textToRemove) textToRemove.remove();
 
                 // Вставляем альбом в body
                 body.appendChild(albumContainer);
+
+                // Добавляем тексты после альбома
+                texts.forEach(textHtml => {
+                    const textDiv = document.createElement('div');
+                    textDiv.className = 'text';
+                    textDiv.innerHTML = textHtml;
+                    body.appendChild(textDiv);
+                });
 
                 // Добавляем плитки
                 albumItems.forEach((item, index) => {
@@ -568,38 +572,34 @@ function collectAllMediaForLightbox() {
     const allMediaElements = document.querySelectorAll('.album-item, .photo_wrap, .video_file_wrap');
 
     allMediaElements.forEach(el => {
-        let isVisible = true;
-
-        if (el.classList.contains('album-item')) {
-            const msg = el.closest('.message');
-            if (msg && msg.style.display === 'none') {
-                isVisible = false;
-            }
-        } else {
-            const msg = el.closest('.message');
-            if (msg && msg.style.display === 'none') {
-                isVisible = false;
-            }
+        // Пропускаем .photo_wrap и .video_file_wrap, которые находятся внутри .album-item
+        // (они уже учтены как .album-item)
+        if (!el.classList.contains('album-item') && el.closest('.album-item')) {
+            return;
         }
 
-        if (isVisible) {
-            let fullSrc, isVideo;
+        // Проверяем видимость
+        const msg = el.closest('.message');
+        if (msg && msg.style.display === 'none') {
+            return;
+        }
 
-            if (el.classList.contains('album-item')) {
-                fullSrc = el.dataset.fullSrc;
-                isVideo = el.dataset.isVideo === 'true';
-            } else {
-                fullSrc = el.getAttribute('href');
-                isVideo = el.classList.contains('video_file_wrap');
-            }
+        let fullSrc, isVideo;
 
-            if (fullSrc) {
-                lightboxItems.push({
-                    element: el,
-                    fullSrc: fullSrc,
-                    isVideo: isVideo
-                });
-            }
+        if (el.classList.contains('album-item')) {
+            fullSrc = el.dataset.fullSrc;
+            isVideo = el.dataset.isVideo === 'true';
+        } else {
+            fullSrc = el.getAttribute('href');
+            isVideo = el.classList.contains('video_file_wrap');
+        }
+
+        if (fullSrc) {
+            lightboxItems.push({
+                element: el,
+                fullSrc: fullSrc,
+                isVideo: isVideo
+            });
         }
     });
 
@@ -624,16 +624,6 @@ function handleMediaClick(e) {
     e.stopPropagation();
 
     let targetEl = e.currentTarget;
-    let fullSrc, isVideo;
-
-    if (targetEl.classList.contains('album-item')) {
-        fullSrc = targetEl.dataset.fullSrc;
-        isVideo = targetEl.dataset.isVideo === 'true';
-    } else {
-        fullSrc = targetEl.getAttribute('href');
-        isVideo = targetEl.classList.contains('video_file_wrap');
-    }
-
     const index = lightboxItems.findIndex(item => item.element === targetEl);
 
     if (index >= 0) {
@@ -651,15 +641,19 @@ let lightboxState = {
 };
 
 function initLightbox() {
+    // Удаляем старый лайтбокс, если есть (защита от дублирования)
+    const oldLightbox = document.getElementById('lightbox');
+    if (oldLightbox) oldLightbox.remove();
+
     const lightbox = document.createElement('div');
     lightbox.id = 'lightbox';
     lightbox.className = 'lightbox';
     lightbox.innerHTML = `
         <div class="lightbox-overlay"></div>
         <div class="lightbox-content">
-            <button class="lightbox-close" aria-label="Закрыть">&times;</button>
-            <button class="lightbox-prev" aria-label="Предыдущее">&#10094;</button>
-            <button class="lightbox-next" aria-label="Следующее">&#10095;</button>
+            <button type="button" class="lightbox-close" aria-label="Закрыть">&times;</button>
+            <button type="button" class="lightbox-prev" aria-label="Предыдущее">&#10094;</button>
+            <button type="button" class="lightbox-next" aria-label="Следующее">&#10095;</button>
             <div class="lightbox-media-container">
                 <img class="lightbox-image" src="" alt="">
                 <video class="lightbox-video" src="" controls style="display:none;"></video>
@@ -669,10 +663,10 @@ function initLightbox() {
     `;
     document.body.appendChild(lightbox);
 
-    lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+    lightbox.querySelector('.lightbox-close').addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
     lightbox.querySelector('.lightbox-overlay').addEventListener('click', closeLightbox);
-    lightbox.querySelector('.lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
-    lightbox.querySelector('.lightbox-next').addEventListener('click', () => navigateLightbox(1));
+    lightbox.querySelector('.lightbox-prev').addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(-1); });
+    lightbox.querySelector('.lightbox-next').addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(1); });
 
     document.addEventListener('keydown', function(e) {
         if (!lightboxState.isOpen) return;
