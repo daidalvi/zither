@@ -856,6 +856,21 @@ msgOutBgSelected {
     grid-template-columns: repeat(3, 1fr);
 }
 
+@media (min-width: 1000px) {
+    /* Для 4+ - 3 колонки (или auto) */
+    .album[data-count="2"],
+    .album[data-count="3"],
+    .album[data-count="4"],
+    .album[data-count="5"],
+    .album[data-count="6"],
+    .album[data-count="7"],
+    .album[data-count="8"],
+    .album[data-count="9"],
+    .album[data-count="10"] {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
 .album-item {
     position: relative;
     cursor: pointer;
